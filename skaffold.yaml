@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta6
+kind: Config
+build:
+  artifacts:
+    - image: student-app
+      docker: 
+        dockerfile: Dockerfile
+  local: {}
+   
+deploy:
+  kubectl:
+    manifests:
+     - configmap-stud.yaml
+     - manifest.yaml
+  

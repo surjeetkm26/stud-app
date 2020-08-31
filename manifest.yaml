@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-deploy
+  labels:
+    app: stud-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stud-app  
+  template:
+    metadata:
+      labels:
+         app: stud-app
+    spec:
+      containers:
+       - name: stud-app
+         image: student-app:latest
+         ports:
+          - containerPort: 8080
+         imagePullPolicy: Never
+
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-service
+  labels:
+    name: stud-app
+spec:
+  selector:
+    app: stud-app
+  ports:
+   - port: 8080
+     targetPort: 8080
+  type: LoadBalancer
